@@ -37,6 +37,9 @@ public class Pedido {
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime dataHora;
 
+    @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean finalizado;
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
