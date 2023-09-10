@@ -3,11 +3,13 @@ package com.spring.ecommerce.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.spring.ecommerce.model.Produto;
 import com.spring.ecommerce.repository.ProdutoRepository;
 import com.spring.ecommerce.service.interfaces.ICrudService;
 
+@Service
 public class ProdutoService implements ICrudService<Produto> {
 
     @Autowired

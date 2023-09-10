@@ -18,7 +18,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "item")
+@Table(name = "produto")
 @Getter
 @Setter
 @ToString
@@ -35,7 +35,7 @@ public class Produto {
     @Column(nullable = false)
     private String descricao;
     
-    @Column(columnDefinition = "MONEY")
+    @Column
     private BigDecimal valor;
     
     @Column(columnDefinition = "INTEGER DEFAULT 0")

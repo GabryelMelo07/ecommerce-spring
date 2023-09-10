@@ -34,7 +34,7 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column
     private LocalDateTime dataHora;
 
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
