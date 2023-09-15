@@ -39,7 +39,7 @@ public class ProdutoService implements ICrudService<Produto> {
         Produto produtoAtualizado = produtoRepository.findById(id).get();
         produtoAtualizado.setDescricao(produto.getDescricao());
         produtoAtualizado.setEstoque(produto.getEstoque());
-        produtoAtualizado.setValor(produtoAtualizado.getValor());
+        produtoAtualizado.setValor(produto.getValor());
         return produtoRepository.save(produtoAtualizado);
     }
 
