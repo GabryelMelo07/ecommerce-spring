@@ -2,6 +2,8 @@ package com.spring.ecommerce.model;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +28,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Item {
-
+    
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +37,7 @@ public class Item {
     @Column
     private int quantidade;
 
-    @Column(columnDefinition = "MONEY")
+    @Column
     private BigDecimal valor;
     
     @ManyToOne
@@ -44,6 +46,14 @@ public class Item {
 
     @ManyToOne
     @JoinColumn(name = "produto_id")
+    @JsonIgnoreProperties("itens")
     private Produto produto;
+
+    public Item(int quantidade, Pedido pedido, Produto produto) {
+        this.quantidade = quantidade;
+        this.pedido = pedido;
+        this.produto = produto;
+        this.valor = this.getProduto().getValor().multiply(BigDecimal.valueOf(this.getQuantidade()));
+    }
     
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.ecommerce.DTO.ItemDTO;
 import com.spring.ecommerce.model.Item;
 import com.spring.ecommerce.service.ItemService;
 
@@ -41,14 +42,14 @@ public class ItemController {
     }
 
     @PostMapping
-    public ResponseEntity<Item> save(@RequestBody Item item) {
-        itemService.save(item);
+    public ResponseEntity<Item> save(@RequestBody ItemDTO itemDto) {
+        Item item = itemService.saveItemDTO(itemDto);
         return ResponseEntity.ok().body(item);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Item> update(@PathVariable int id, @RequestBody Item item) {
-        itemService.update(id, item);
+    public ResponseEntity<Item> update(@PathVariable int id, @RequestBody ItemDTO itemDto) {
+        Item item = itemService.updateItemDTO(id, itemDto);
         return ResponseEntity.ok().body(item);
     }
 
