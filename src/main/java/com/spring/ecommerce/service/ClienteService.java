@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.ecommerce.DTO.ClienteDTO;
 import com.spring.ecommerce.model.Cliente;
 import com.spring.ecommerce.repository.ClienteRepository;
-import com.spring.ecommerce.service.interfaces.ICrudService;
 
 @Service
-public class ClienteService implements ICrudService<Cliente> {
+public class ClienteService extends ClienteBase {
 
     @Autowired
     private ClienteRepository clienteRepository;
@@ -26,7 +26,7 @@ public class ClienteService implements ICrudService<Cliente> {
 
     @Override
     public Cliente getById(int id) {
-        return clienteRepository.findById(id).get();
+        return clienteRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Cliente inexistente."));
     }
 
     @Override
@@ -50,6 +50,24 @@ public class ClienteService implements ICrudService<Cliente> {
             return true;
         }
         return false;
+    }
+
+    private Cliente clienteFromDTO(ClienteDTO clienteDto) {
+        Cliente cliente = new Cliente(clienteDto);
+        return cliente;
+    }
+    
+    public Cliente saveClienteDTO(ClienteDTO clienteDto) {
+        Cliente cliente = clienteFromDTO(clienteDto);
+        save(cliente);
+        return cliente;
+    }
+
+    public Cliente updateClienteDTO(int id, ClienteDTO clienteDto) {
+        Cliente clienteAtualizado = clienteFromDTO(clienteDto);
+        clienteAtualizado.setId(id);
+        update(id, clienteAtualizado);
+        return clienteAtualizado;
     }
 
 }

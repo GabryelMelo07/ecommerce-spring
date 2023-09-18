@@ -5,12 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.ecommerce.DTO.ProdutoDTO;
 import com.spring.ecommerce.model.Produto;
 import com.spring.ecommerce.repository.ProdutoRepository;
-import com.spring.ecommerce.service.interfaces.ICrudService;
 
 @Service
-public class ProdutoService implements ICrudService<Produto> {
+public class ProdutoService extends ProdutoBase {
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -26,7 +26,7 @@ public class ProdutoService implements ICrudService<Produto> {
 
     @Override
     public Produto getById(int id) {
-        return produtoRepository.findById(id).get();
+        return produtoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Produto inexistente."));
     }
 
     @Override
@@ -50,6 +50,24 @@ public class ProdutoService implements ICrudService<Produto> {
             return true;
         }
         return false;
+    }
+    
+    private Produto produtoFromDTO(ProdutoDTO produtoDto) {
+        Produto produto = new Produto(produtoDto);
+        return produto;
+    }
+
+    public Produto saveProdutoDTO(ProdutoDTO produtoDto) {
+        Produto produto = produtoFromDTO(produtoDto);
+        save(produto);
+        return produto;
+    }
+
+    public Produto updateProdutoDTO(int id, ProdutoDTO produtoDto) {
+        Produto produtoAtualizado = produtoFromDTO(produtoDto);
+        produtoAtualizado.setId(id);
+        update(id, produtoAtualizado);
+        return produtoAtualizado;
     }
     
 }
