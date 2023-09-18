@@ -1,8 +1,13 @@
 package com.spring.ecommerce.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +33,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pedido {
-    
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,11 +45,32 @@ public class Pedido {
     @Column(columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean finalizado;
 
+    @Column
+    private BigDecimal valorTotal;
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
+    @JsonIgnoreProperties("pedidos")
     private Cliente cliente;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("pedido")
     private List<Item> itens;
+    
+    public Pedido(Cliente cliente) {
+        this.dataHora = LocalDateTime.now();
+        this.finalizado = false;
+        this.cliente = cliente;
+        this.itens = new ArrayList<Item>();
+    }
+    
+    public void refreshValorAtual() {
+        this.valorTotal = BigDecimal.ZERO;
+        if (this.itens != null && !this.itens.isEmpty()) {
+            for (Item item : this.itens) {
+                this.valorTotal = this.valorTotal.add(item.getValor());
+            }
+        }
+    }
     
 }

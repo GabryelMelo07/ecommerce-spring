@@ -1,7 +1,11 @@
 package com.spring.ecommerce.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.spring.ecommerce.DTO.ClienteDTO;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,7 +44,14 @@ public class Cliente {
     @Column(length = 60, nullable = false)
     private String senha;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Pedido> pedidos;
+    
+    public Cliente(ClienteDTO clienteDto) {
+        this.nome = clienteDto.getNome();
+        this.email = clienteDto.getEmail();
+        this.senha = clienteDto.getSenha();
+        this.pedidos = new ArrayList<>();
+    }
     
 }

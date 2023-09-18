@@ -1,8 +1,12 @@
 package com.spring.ecommerce.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.spring.ecommerce.DTO.ProdutoDTO;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,7 +45,14 @@ public class Produto {
     @Column(columnDefinition = "INTEGER DEFAULT 0")
     private int estoque;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Item> itens;
+    
+    public Produto(ProdutoDTO produtoDto) {
+        this.descricao = produtoDto.getDescricao();
+        this.valor = produtoDto.getValor();
+        this.estoque = produtoDto.getEstoque();
+        this.itens = new ArrayList<>();
+    }
     
 }

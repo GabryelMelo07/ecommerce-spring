@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.ecommerce.DTO.ProdutoDTO;
 import com.spring.ecommerce.model.Produto;
 import com.spring.ecommerce.service.ProdutoService;
 
@@ -41,14 +42,14 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> save(@RequestBody Produto produto) {
-        produtoService.save(produto);
+    public ResponseEntity<Produto> save(@RequestBody ProdutoDTO produtoDto) {
+        Produto produto = produtoService.saveProdutoDTO(produtoDto);
         return ResponseEntity.ok().body(produto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Produto> update(@PathVariable int id, @RequestBody Produto produto) {
-        produtoService.update(id, produto);
+    public ResponseEntity<Produto> update(@PathVariable int id, @RequestBody ProdutoDTO produtoDto) {
+        Produto produto = produtoService.updateProdutoDTO(id, produtoDto);
         return ResponseEntity.ok().body(produto);
     }
 

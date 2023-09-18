@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.ecommerce.DTO.ClienteDTO;
 import com.spring.ecommerce.model.Cliente;
 import com.spring.ecommerce.service.ClienteService;
 
@@ -41,14 +42,14 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> save(@RequestBody Cliente cliente) {
-        clienteService.save(cliente);
+    public ResponseEntity<Cliente> save(@RequestBody ClienteDTO clienteDto) {
+        Cliente cliente = clienteService.saveClienteDTO(clienteDto);
         return ResponseEntity.ok().body(cliente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable int id, @RequestBody Cliente cliente) {
-        clienteService.update(id, cliente);
+    public ResponseEntity<Cliente> update(@PathVariable int id, @RequestBody ClienteDTO clienteDto) {
+        Cliente cliente = clienteService.updateClienteDTO(id, clienteDto);
         return ResponseEntity.ok().body(cliente);
     }
 
