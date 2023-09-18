@@ -13,11 +13,12 @@ Criação das APIs de um e-commerce em Spring Boot, usando Redis como cache para
 # Como usar as APIs:
 * Criar um Cliente.
 * Criar um Produto.
-* Criar um Pedido.
+* Criar um Pedido (Cada cliente só pode abrir 1 pedido por vez, não é possível ter 2 carrinhos de compra ativos).
 * Criar um Item.
-- Após os passos acima, o Pedido será salvo no Redis.
+#### Após os passos acima, o Pedido será salvo no Redis.
+#### Para a visualização dos Pedidos no Redis, aconselho o uso do "Another Redis Desktop Manager".
 - Para persistir no Banco de dados principal (PostgreSQL):
-* No método GET /pedido/finalizar/{id}, passar o ID do Pedido no Redis como parâmetro.
+  * No método GET /pedido/finalizar/{id}, passar o ID do Pedido no Redis como parâmetro.
 
 # Requisitos do trabalho:
 ![Trabalho Redis - TBD 2 Sem](trab_redis.png)
