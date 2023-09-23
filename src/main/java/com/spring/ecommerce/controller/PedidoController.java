@@ -52,12 +52,6 @@ public class PedidoController {
         return ResponseEntity.ok().body(pedido);
     }
 
-    // @PutMapping("/{id}")
-    // public ResponseEntity<Pedido> update(@PathVariable int id, @RequestBody Pedido pedido) {
-    //     pedidoService.update(id, pedido);
-    //     return ResponseEntity.ok().body(pedido);
-    // }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable int id) {
         boolean deletado = pedidoService.delete(id);

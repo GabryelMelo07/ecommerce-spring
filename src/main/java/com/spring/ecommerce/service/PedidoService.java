@@ -87,7 +87,7 @@ public class PedidoService extends PedidoBase {
     }
 
     private Pedido pedidoFromDTO(PedidoDTO pedidoDto) {
-        Cliente cliente = clienteRepository.findById(pedidoDto.getClienteId()).get();
+        Cliente cliente = clienteRepository.findById(pedidoDto.getClienteId()).orElseThrow(() -> new IllegalArgumentException("Cliente não encontrado."));
         Pedido pedido = new Pedido(cliente);
         return pedido;
     }
